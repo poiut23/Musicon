@@ -45,23 +45,23 @@ const context = {
   ]
 };
 
-const handlebarsTemplateElement = document.getElementById("templateHB");
-
-const templateSource = templateElement.innerHTML;
-
-const template = Handlebars.compile(templateSource);
-
-const compiledHtml = template(context);
-
-document.getElementById('information').innerHTML = compiledHtml;
-
 try {
   const templateElement = document.getElementById("templateHB");
   if (!templateElement) throw new Error('Template element not found');
   const templateSource = templateElement.innerHTML;
   const template = Handlebars.compile(templateSource);
-  const compiledHtml = template(context);
-  document.getElementById('information').innerHTML = compiledHtml;
+
+  // Render to #information if it exists (index.html)
+  const infoElement = document.getElementById('information');
+  if (infoElement) {
+    infoElement.innerHTML = template(context);
+  }
+
+  // Render to .container inside #showcase if it exists (store.html)
+  const showcaseContainer = document.querySelector('#showcase .container');
+  if (showcaseContainer) {
+    showcaseContainer.innerHTML = template({ instruments: context.instruments });
+  }
 } catch (error) {
   console.error('Error compiling template:', error);
 }
