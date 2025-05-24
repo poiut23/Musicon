@@ -1,7 +1,19 @@
-const context = {
-  title: "Welcome to Musicon",
-  body: "Musicon is a budding musical storefront with a mission to share the joy of music. These magnificent auditory tools are designed with musical creators, like you, in mind. Hobbyists, beginners, and experts alike can appreciate the resplendent sounds supplied by each and every instrument we carry. Join us in delivering the euphoric vibrations of melodia to the citizens of the world!",
-  instruments: [
+// 1:  Defines the context object containing homepage and instruments data for Handlebars templates.
+// 2:  The context includes a title, body, and an array of instrument objects with their details.
+// 3:  Each instrument object may include image, name, description, price, and optional sale price.
+// 4:  The try-catch block ensures errors in template compilation or rendering are caught and logged.
+// 5:  Selects the Handlebars template element by its ID.
+// 6:  Throws an error if the template element is not found in the DOM.
+// 7:  Retrieves the template source (HTML) from the template element.
+// 8:  Compiles the Handlebars template source into a render function.
+// 9:  Selects the #information element (homepage) and renders the template with the full context if it exists.
+// 10: Selects the .container inside #showcase (store page) and renders the template with only the instruments array if it exists.
+// 11: Catches and logs any errors that occur during template compilation or rendering.
+
+const context = { // 1
+  title: "Welcome to Musicon", // 2
+  body: "Musicon is a budding musical storefront with a mission to share the joy of music. These magnificent auditory tools are designed with musical creators, like you, in mind. Hobbyists, beginners, and experts alike can appreciate the resplendent sounds supplied by each and every instrument we carry. Join us in delivering the euphoric vibrations of melodia to the citizens of the world!", // 2
+  instruments: [ // 2
     {
       image:
         "https://content.codecademy.com/courses/learn-handlebars/musicon/electronic-keyboard.png",
@@ -45,23 +57,23 @@ const context = {
   ]
 };
 
-try {
-  const templateElement = document.getElementById("templateHB");
-  if (!templateElement) throw new Error('Template element not found');
-  const templateSource = templateElement.innerHTML;
-  const template = Handlebars.compile(templateSource);
+try { // 4
+  const templateElement = document.getElementById("templateHB"); // 5
+  if (!templateElement) throw new Error('Template element not found'); // 6
+  const templateSource = templateElement.innerHTML; // 7
+  const template = Handlebars.compile(templateSource); // 8
 
   // Render to #information if it exists (index.html)
-  const infoElement = document.getElementById('information');
+  const infoElement = document.getElementById('information'); // 9
   if (infoElement) {
     infoElement.innerHTML = template(context);
   }
 
   // Render to .container inside #showcase if it exists (store.html)
-  const showcaseContainer = document.querySelector('#showcase .container');
+  const showcaseContainer = document.querySelector('#showcase .container'); // 10
   if (showcaseContainer) {
     showcaseContainer.innerHTML = template({ instruments: context.instruments });
   }
-} catch (error) {
+} catch (error) { // 11
   console.error('Error compiling template:', error);
 }
